@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <p th:text="'Hello, ' + ${name} + '!'"></p>
+    <div id="app">
+        Massages:
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <form th:action="@{/logout}" method="post" class="form-signin">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <script>
+        Vue.component('message-row', {
+            props: ['message'],
+            template: '<div>' +
+                '<i>({{message.id}})</i> {{ message.text }}' +
+                '</div>'
+        });
+
+        Vue.component('messages-list', {
+            props: ['messages'],
+            template: '<div>' +
+                '<message-row v-for="message in messages" :key="message.id" :message="message"/>' +
+                '</div>'
+        });
+
+        let app = new Vue({
+            el: '#app',
+            template: '<messages-list :messages="messages"/>',
+            data: {
+                messages: [
+                    { id: '1' , text: "Wow"},
+                    { id: '3' , text: "hello"},
+                    { id: '2' , text: 'how are you'}
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
