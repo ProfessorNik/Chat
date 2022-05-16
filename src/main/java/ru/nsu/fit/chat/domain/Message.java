@@ -1,5 +1,6 @@
 package ru.nsu.fit.chat.domain;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,11 +11,9 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String text;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "messages_user",
-            joinColumns = @JoinColumn(name = "message_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private User user;
+    @JsonView
+    private Long time;
+    private String text;
+    private String username;
 }

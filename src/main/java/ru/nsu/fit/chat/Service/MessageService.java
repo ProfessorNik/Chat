@@ -8,6 +8,10 @@ import ru.nsu.fit.chat.exception.UserExistException;
 import ru.nsu.fit.chat.repository.MessageRepository;
 import ru.nsu.fit.chat.repository.UserRepository;
 
+import java.util.Date;
+import java.util.List;
+
+
 @Service
 public class MessageService {
     private MessageRepository messageRepository;
@@ -27,8 +31,12 @@ public class MessageService {
         return  userRepository.findByUsername(username);
     }
 
-    public void sendMessage(String username,
-                            String messageText) throws UserExistException {
+    public List<Message> getAllMessages(){
+        return messageRepository.findAll();
+    }
+
+    public Message saveMessage(String username,
+                               String messageText) throws UserExistException {
         User user = findByUserName(username);
         if(user == null){
             throw new UserExistException();
@@ -36,7 +44,9 @@ public class MessageService {
 
         Message message = new Message();
         message.setText(messageText);
-        message.setUser(user);
+        message.setTime(new Date().getTime());
+        message.setUsername(username);
         messageRepository.save(message);
+        return message;
     }
 }

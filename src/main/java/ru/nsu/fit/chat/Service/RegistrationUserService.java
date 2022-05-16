@@ -49,7 +49,6 @@ public class RegistrationUserService {
 
     private User createUser(String username, String password){
         User user = new User();
-        user.setId(2L);
         user.setUsername(username);
         user.setPassword(encoder.encode(password));
         user.setActive(true);
